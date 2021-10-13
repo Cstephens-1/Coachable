@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import GymClassCard from "./GymClassCard"
 import NavBar from "./NavBar"
  
  
@@ -13,13 +14,16 @@ function Mypage(){
 
     console.log(gymClasses)
 
-    // function mapClasses(gymClasses){
-    //     gymClasses.map(gym_class=> {
-    //         return(
-    //             <GymClassCard gym_class={gym_class} />
-    //         )
-    //     })
-    // }
+    function mapClasses(gymClasses){
+            return(
+                gymClasses.map(gymClass =>{
+                    return(
+                        <GymClassCard gymClass={gymClass} />
+                    )
+                })
+               
+            )
+        }
  
     return(
         <div>
@@ -27,7 +31,8 @@ function Mypage(){
         <NavBar />
         <p>Muscle Man goes here</p>
         <h1>Today's Plans (calendar)</h1>
-        <h1>My Classes(a scrolling bar of class cards with class info laid out)</h1>
+        <h3>My Classes:</h3>
+        {mapClasses(gymClasses)}
         <h3>Workout pie chart to track how often muscle groups are done</h3>
         </div>
     )}
