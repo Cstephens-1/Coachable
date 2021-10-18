@@ -5,7 +5,6 @@ function WorkoutCard({workout, handleDelete}){
     const [exercises, setExercises] = useState([])
     const [selectedExerciseList, setSelectedExerciseList] = useState([])
     const [reps, setReps]=useState("")
-    console.log("this is a workout in workoutCard", workout)
 
     function mapExerciseLists(workout){
             return(
@@ -24,7 +23,6 @@ function WorkoutCard({workout, handleDelete}){
                 .then(exercise => setExercises(exercise))
             }, [])
 
-    console.log("these are exercise lists in workout card", exercises)
 
 
     function deleteThisWorkout(){

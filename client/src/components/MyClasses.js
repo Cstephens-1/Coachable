@@ -4,7 +4,6 @@ import GymClassCard from "./GymClassCard"
 
 function MyClasses(){
     const [gymClasses, setGymClasses] = useState([]);
-    console.log("this log is gymclasses in myclass", gymClasses)
     const [level, setLevel] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
@@ -17,7 +16,6 @@ function MyClasses(){
         .then(gymclass => setGymClasses(gymclass))
     }, [])
 
-    console.log(gymClasses)
 
       //DELETE an exercise
       function handleDelete(gymClass){

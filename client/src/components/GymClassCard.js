@@ -8,6 +8,10 @@ function GymClassCard({gymClass, handleDelete}){
     const [students, setStudents] =useState([])
     const [selectedStudent, setSelectedStudent] = useState([])
     const [description, setDescription] = useState("")
+    const [workoutLibrary, setWorkoutLibrary]=useState([])
+    const [selectedWorkout, setSelectedWorkout]=useState([])
+    const [classWorkouts, setClassWorkouts]=useState([])
+
 
     // console.log(gymClass)
     // console.log(gymClass.students)
@@ -16,10 +20,17 @@ function GymClassCard({gymClass, handleDelete}){
     useEffect(()=>{
     fetch("http://localhost:3000/class_students")
     .then(resp=> resp.json())
-    .then(student => setClassStudents(student))
+    .then(classStudent => setClassStudents(classStudent))
     }, [])
 
+    //fetch all of the existing workout templates
+    useEffect(()=>{
+        fetch("http://localhost:3000/workout_plans")
+        .then(resp=> resp.json())
+        .then(workout=> setWorkoutLibrary(workout))
+    }, [])
 
+    //delete an existing class
     function deleteThisClass(){
         handleDelete(gymClass)
     }
@@ -46,6 +57,13 @@ function GymClassCard({gymClass, handleDelete}){
         )
     }
 
+      //fetch the students to use in the addStudent function
+      useEffect(()=>{
+        fetch("http://localhost:3000/students")
+        .then(resp=> resp.json())
+        .then(student => setStudents(student))
+    }, [])
+
     //add a student to the specific class..requires a refresh
     function addStudentToClass(synthEvent){
         synthEvent.preventDefault()
@@ -65,13 +83,9 @@ function GymClassCard({gymClass, handleDelete}){
                 .then(newStudent=> setClassStudents([...classStudents, newStudent]))
         }
 
-//fetch the students to use in the addStudent function
-    useEffect(()=>{
-        fetch("http://localhost:3000/students")
-        .then(resp=> resp.json())
-        .then(student => setStudents(student))
-    }, [])
+  
 
+    //EDIT class description
     function editClassDescription(synthEvent){
         synthEvent.preventDefault()
         console.log(description)
@@ -84,8 +98,24 @@ function GymClassCard({gymClass, handleDelete}){
         })
         .then(resp => resp.json())
         .then(updatedDescription => setDescription(updatedDescription))
-        
+    }
 
+    function addWorkoutToClass(synthEvent){
+        synthEvent.preventDefault()
+        console.log(selectedWorkout, gymClass)
+        const addedWorkout ={
+            workout_plan_id: selectedWorkout,
+            gym_class_id: gymClass.id
+        }
+        // POST fetch to class_students, hit a create route.
+        fetch("http://localhost:3000/class_workouts", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(addedWorkout)})
+                .then(resp=> resp.json())
+                .then(newWorkout=> setClassWorkouts([...classWorkouts, newWorkout]))
     }
 
 
@@ -97,6 +127,15 @@ function GymClassCard({gymClass, handleDelete}){
             <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
             <ButtonStyler onClick={editClassDescription}>Edit description</ButtonStyler>
             <h5>Today's workout</h5>
+            <ButtonStyler onClick={addWorkoutToClass}>Add a workout</ButtonStyler>
+            <select type="text" value={selectedWorkout} onChange={(e) => setSelectedWorkout(e.target.value)}>
+                <option >Please select a workout</option>
+                {workoutLibrary.map(workout=>{
+                    return(
+                        <option value={workout.id} key={workout.id}>{workout.title}</option>
+                    )
+                })}
+            </select>
             {mapWorkouts(gymClass)}
             <h5>Students:</h5>
             {mapStudents(gymClass)}
