@@ -12,8 +12,7 @@ class WorkoutPlansController < ApplicationController
 
     def create 
        workout_plan = WorkoutPlan.create(title: params[:title], user_id: User.first.id)
-       byebug
-    render json: workout_plan
+        render json: workout_plan
     end
 
     def destroy

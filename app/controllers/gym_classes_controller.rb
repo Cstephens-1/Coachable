@@ -15,8 +15,19 @@ class GymClassesController < ApplicationController
         render json: gym_class
     end
 
+    def update 
+        gym_class = GymClass.find_by(id: params[:id])
+        if gym_class
+            gym_class.update(description: params[:description])
+            render json: gym_class
+        else
+            render json: {error: "gym class doesn't exist"}
+        end
+    end
+
     def destroy
         gym_class = GymClass.find_by(id: params[:id])
+        byebug
         if gym_class 
             gym_class.destroy
             head :no_content

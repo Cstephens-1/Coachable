@@ -43,6 +43,6 @@ class ExercisesController < ApplicationController
     private
 
     def exercise_params 
-        params.permit(:description)
+        params.permit(:description, :muscle_group)
     end
 end

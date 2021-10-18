@@ -43,7 +43,7 @@ function ExerciseLibrary(){
         synthEvent.preventDefault();
         const newExercise = {
             title: title,
-            muscle_groups: muscleGroups,
+            muscle_group: muscleGroups,
             description: description,
             // user_id: user
         };
@@ -54,21 +54,22 @@ function ExerciseLibrary(){
             },
             body: JSON.stringify(newExercise)})
             .then(resp=> resp.json())
-            .then(setExerciseLibrary(...exerciseLibrary, newExercise))
+            .then(newExerciseFromDataBase => setExerciseLibrary([...exerciseLibrary, newExerciseFromDataBase]))
     }
 
 
     //UPDATE an exercises' description or title
     function editExerciseDescription(exercise){
-        fetch(`http://localhost:3000/exercises/${exercise.id}`, {
-            method: "PATCH",
-            headers: {
-                "content-type":"application/json"
-            },
-            body: JSON.stringify(description)
-        })
-        .then(resp => resp.json())
-        .then(setDescription, description)
+        console.log(exercise)
+        // fetch(`http://localhost:3000/exercises/${exercise.id}`, {
+        //     method: "PATCH",
+        //     headers: {
+        //         "content-type":"application/json"
+        //     },
+        //     body: JSON.stringify(description)
+        // })
+        // .then(resp => resp.json())
+        // .then(setDescription(description))
     }
     
 

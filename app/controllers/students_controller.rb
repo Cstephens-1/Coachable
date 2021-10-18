@@ -15,6 +15,16 @@ class StudentsController < ApplicationController
         render json: student
     end
 
+    def update 
+        student = Student.find_by(id: params[:id])
+        if student
+            student.update(notes: params[:notes])
+            render json: student
+        else
+            render json: {error: "student doesn't exist"}
+        end
+    end
+
     def destroy
         student = Student.find_by(id: params[:id])
         if student 

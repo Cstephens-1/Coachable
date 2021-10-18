@@ -38,7 +38,7 @@ function Students(){
         )
     }
 
-    //addd a new student to the master list
+    //add a new student to the master list
     function handleSubmit(synthEvent){
         synthEvent.preventDefault();
         const newStudent = {
@@ -53,9 +53,9 @@ function Students(){
             },
             body: JSON.stringify(newStudent)})
             .then(resp=> resp.json())
-            .then(setStudentList(...studentList, newStudent))
+            .then(studentFromDataBase=> 
+                setStudentList([...studentList, studentFromDataBase]))
     }
-
 
     return(
         <>

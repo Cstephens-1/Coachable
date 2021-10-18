@@ -16,7 +16,7 @@ function WorkoutLibrary(){
     // console.log("state of workoutLibrary", workoutLibrary)
 
     //format the workout plans
-    function mapWorkouts(workoutLibrary){
+    function mapWorkouts(){
         return(
             workoutLibrary.map(workout =>{
                 return(
@@ -53,9 +53,8 @@ function WorkoutLibrary(){
             },
             body: JSON.stringify(newWorkoutPlan)})
             .then(resp=> resp.json())
-            .then(setWorkoutLibrary(...workoutLibrary, newWorkoutPlan))
+            .then(workoutPlanFromDataBase => setWorkoutLibrary([...workoutLibrary, workoutPlanFromDataBase]))
     }
-
 
 
     return(
@@ -68,7 +67,7 @@ function WorkoutLibrary(){
             <button type="submit">Create a new workout</button>
         </form>
         <LibaryStyler>
-        {mapWorkouts(workoutLibrary)}
+            {mapWorkouts()}
         </LibaryStyler>
         </>
     )

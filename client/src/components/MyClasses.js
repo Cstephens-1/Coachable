@@ -4,6 +4,7 @@ import GymClassCard from "./GymClassCard"
 
 function MyClasses(){
     const [gymClasses, setGymClasses] = useState([]);
+    console.log("this log is gymclasses in myclass", gymClasses)
     const [level, setLevel] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
@@ -45,7 +46,9 @@ function MyClasses(){
             },
             body: JSON.stringify(newClass)})
             .then(resp=> resp.json())
-            .then(setGymClasses(...gymClasses, newClass))
+            .then(newClassFromDataBase =>{
+                setGymClasses([...gymClasses, newClassFromDataBase])
+        })
     }
 
     // t.time :start_time
@@ -56,7 +59,7 @@ function MyClasses(){
 
 
 
-    function mapClasses(gymClasses){
+    function mapClasses(){
             return(
                 gymClasses.map(gymClass =>{
                     return(
@@ -88,7 +91,7 @@ function MyClasses(){
             </form>
             </FormStyler>
         <MyClassContainer>
-            {mapClasses(gymClasses)}
+            {mapClasses()}
         </MyClassContainer>
         </>
     )
