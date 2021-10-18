@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 
-function GymClassCard({gymClass}){
+function GymClassCard({gymClass, handleDelete}){
 
     const [classStudents, setClassStudents] = useState([])
     console.log(gymClass)
@@ -20,45 +20,48 @@ function GymClassCard({gymClass}){
 
     console.log("this log is in classStudents", classStudents)
 
-
-function mapStudents(gymClass){
-    return(
-        gymClass.students.map(student=>{
-            console.log(student.id)
-            return(
-                <li>{student.name}</li>
-            )
-        })
-    )
-}
-
-function mapWorkouts(gymClass){
-    console.log( "instance of gymclass", gymClass)
-    return(
-        gymClass.workout_plans.map(workout=>{
-            console.log("this log comes from gymclasscard", gymClass.class_workouts)
-            return(
-                <h5>{workout.title}</h5>
-            )
-        })
-    )
-}
-
-function addStudentToClass(gymClass){
-    const newClassStudent= {
-
-
+    function deleteThisClass(){
+        handleDelete(gymClass)
     }
-    // POST fetch to class_students, hit a create route.
-    fetch("http://localhost:3000/class_students", {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(newClassStudent)})
-            .then(resp=> resp.json())
-            .then(setClassStudents(...classStudents, newClassStudent))
+
+    function mapStudents(gymClass){
+        return(
+            gymClass.students.map(student=>{
+                console.log(student.id)
+                return(
+                    <li>{student.name}</li>
+                )
+            })
+        )
     }
+
+    function mapWorkouts(gymClass){
+        console.log( "instance of gymclass", gymClass)
+        return(
+            gymClass.workout_plans.map(workout=>{
+                console.log("this log comes from gymclasscard", gymClass.class_workouts)
+                return(
+                    <h5>{workout.title}</h5>
+                )
+            })
+        )
+    }
+
+// function addStudentToClass(gymClass){
+//     const newClassStudent= {
+
+
+    // }
+    // // POST fetch to class_students, hit a create route.
+    // fetch("http://localhost:3000/class_students", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-type": "application/json",
+    //         },
+    //         body: JSON.stringify(newClassStudent)})
+    //         .then(resp=> resp.json())
+    //         .then(setClassStudents(...classStudents, newClassStudent))
+    // }
 
 
 
@@ -72,7 +75,8 @@ function addStudentToClass(gymClass){
             {mapWorkouts(gymClass)}
             <h5>Students:</h5>
             {mapStudents(gymClass)}
-            <button type="submit">Add a student</button>
+            <ButtonStyler type="submit">Add a student</ButtonStyler>
+            <ButtonStyler onClick={deleteThisClass}>Delete this class</ButtonStyler>
         </GymCardStyler>
     )
 }
@@ -93,5 +97,12 @@ const GymCardStyler = styled.div`
     flex-direction: column;
     position: relative;
     overflow: scroll;
+`
 
+const ButtonStyler= styled.button`
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: skyblue;
+    padding: 5px;
 `

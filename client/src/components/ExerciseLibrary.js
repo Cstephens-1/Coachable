@@ -65,7 +65,7 @@ function ExerciseLibrary(){
             headers: {
                 "content-type":"application/json"
             },
-            body: JSON.stringifyy(description)
+            body: JSON.stringify(description)
         })
         .then(resp => resp.json())
         .then(setDescription, description)

@@ -14,7 +14,7 @@ function StudentCard({student, handleDelete}){
         <StudentCardStyler>
         <h3>{student.name}</h3>
         <p>Notes: {student.notes}</p>
-        <button onClick={deleteThisStudent}>Delete Student</button>
+        <ButtonStyler onClick={deleteThisStudent}>Delete Student</ButtonStyler>
         </StudentCardStyler>
         </>
     )
@@ -29,4 +29,12 @@ const StudentCardStyler = styled.div`
     border-color: black;
     text-align: center;
     margin: 6px;
+`
+
+const ButtonStyler= styled.button`
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: skyblue;
+    padding: 5px;
 `

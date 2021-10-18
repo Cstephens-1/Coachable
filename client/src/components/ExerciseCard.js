@@ -49,4 +49,5 @@ const ButtonStyler= styled.button`
     border-radius: 5px;
     font-size: 15px;
     background-color: skyblue;
+    padding: 5px;
 `

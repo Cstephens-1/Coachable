@@ -17,12 +17,14 @@ function Students(){
         setStudentList([...studentsRemaining])
     }
 
+    //fetch all existing student information
     useEffect(() =>{
         fetch("http://localhost:3000/students")
         .then(resp=> resp.json())
         .then(student => setStudentList(student))
     }, [])
 
+    //format the existing students to their own card
     function mapStudents(studentList){
         return(
             studentList.map(student =>{
@@ -36,6 +38,7 @@ function Students(){
         )
     }
 
+    //addd a new student to the master list
     function handleSubmit(synthEvent){
         synthEvent.preventDefault();
         const newStudent = {
@@ -63,7 +66,7 @@ function Students(){
             <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)}/>
             <label>Notes: </label>
             <input type="text" value={newNote} onChange={(e) => setNewNote(e.target.value)}/>
-            <button type="submit" >Add a new student</button>
+            <ButtonStyler type="submit" >Add a new student</ButtonStyler>
 
         </form>
         <LibaryStyler>
@@ -78,4 +81,12 @@ export default Students
 const LibaryStyler = styled.div`
     display: flexbox;
     flex-direction: row;
+`
+
+const ButtonStyler= styled.button`
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: skyblue;
+    padding: 5px;
 `

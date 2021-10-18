@@ -12,8 +12,17 @@ class GymClassesController < ApplicationController
 
     def create 
         gym_class = GymClass.create(level: params[:level], start_time: params[:start_time], end_time: params[:end_time], description: params[:description], user_id: User.first.id)
-        byebug
         render json: gym_class
+    end
+
+    def destroy
+        gym_class = GymClass.find_by(id: params[:id])
+        if gym_class 
+            gym_class.destroy
+            head :no_content
+        else
+            render json: {error: "gym class doesn't exist"}, status: :not_found
+        end
     end
 
     private

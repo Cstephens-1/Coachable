@@ -18,6 +18,16 @@ function MyClasses(){
 
     console.log(gymClasses)
 
+      //DELETE an exercise
+      function handleDelete(gymClass){
+        fetch(`http://localhost:3000/gym_classes/${gymClass.id}`,{ 
+            method: "DELETE"
+        })
+        let gymClassesRemaining = gymClasses.filter(eachGymClass => eachGymClass.id !== gymClass.id);
+        console.log(gymClassesRemaining)
+        setGymClasses([...gymClassesRemaining])
+    }
+
 
     function handleSubmit(synthEvent){
         synthEvent.preventDefault();
@@ -50,7 +60,7 @@ function MyClasses(){
             return(
                 gymClasses.map(gymClass =>{
                     return(
-                        <GymClassCard gymClass={gymClass} key={gymClass.id}/>
+                        <GymClassCard gymClass={gymClass} key={gymClass.id} handleDelete={handleDelete}/>
                     )
                 })
                
@@ -73,7 +83,7 @@ function MyClasses(){
                 <input type="text" name="start time" value={endTime}  onChange={(e)=> setEndTime(e.target.value)} />
                 <label>Description: </label>
                 <input type="text" name="start time" value={description}  onChange={(e)=> setDescription(e.target.value)} />
-                <button type="submit">Create a new class</button>
+                <ButtonStyler type="submit">Create a new class</ButtonStyler>
          
             </form>
             </FormStyler>
@@ -104,6 +114,13 @@ const FormStyler=styled.div`
     border-style: solid;
     border-color: black;
     padding: 10px;
-    
-
+    border-radius: 18px;
+    text-align: center;
+`
+const ButtonStyler= styled.button`
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: skyblue;
+    padding: 5px;
 `
