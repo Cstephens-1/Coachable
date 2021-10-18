@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_13_015655) do
+ActiveRecord::Schema.define(version: 2021_10_13_182310) do
 
   create_table "class_students", force: :cascade do |t|
     t.integer "student_id", null: false
-    t.integer "class_id", null: false
+    t.integer "gym_class_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["class_id"], name: "index_class_students_on_class_id"
+    t.index ["gym_class_id"], name: "index_class_students_on_gym_class_id"
     t.index ["student_id"], name: "index_class_students_on_student_id"
   end
 
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 2021_10_13_015655) do
     t.index ["user_id"], name: "index_workout_plans_on_user_id"
   end
 
-  add_foreign_key "class_students", "classes"
+  add_foreign_key "class_students", "gym_classes"
   add_foreign_key "class_students", "students"
   add_foreign_key "class_workouts", "gym_classes"
   add_foreign_key "class_workouts", "workout_plans"
