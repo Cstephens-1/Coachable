@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
+// import { useEffect, useState } from "react"
 import styled from "styled-components"
-import GymClassCard from "./GymClassCard"
+// import GymClassCard from "./GymClassCard"
 import MyClasses from "./MyClasses"
-import NavBar from "./NavBar"
+// import NavBar from "./NavBar"
 import WorkoutLibrary from "./WorkoutLibrary"
  
  
@@ -61,26 +61,26 @@ const ClassWrapper = styled.div`
     text-align: center;
 `
 
-const MuscleManWrapper = styled.div`
-    height: 55vh;
-    width: 50vw;
-    background-color: green;
-    position: absolute;
-    border-style: solid;
-    border-width: 2px;
-    border-style: solid
-`
+// const MuscleManWrapper = styled.div`
+//     height: 55vh;
+//     width: 50vw;
+//     background-color: green;
+//     position: absolute;
+//     border-style: solid;
+//     border-width: 2px;
+//     border-style: solid
+// `
 
-const PieChartWrapper=styled.div`
-        height: 50vh;
-        width:50vw;
-        margin-top: 50vh;
-        background-color: red;
-        left: 0px;
-        position: relative;
-`
+// const PieChartWrapper=styled.div`
+//         height: 50vh;
+//         width:50vw;
+//         margin-top: 50vh;
+//         background-color: red;
+//         left: 0px;
+//         position: relative;
+// `
 
-const TodayStyler=styled.div`
-        margin-left: 50vw;
-        text-align: center
-`
+// const TodayStyler=styled.div`
+//         margin-left: 50vw;
+//         text-align: center
+// `

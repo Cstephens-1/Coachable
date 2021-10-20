@@ -2,46 +2,45 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 
-function GymClassCard({gymClass, handleDelete, deleteAStudent}){
+function GymClassCard({gymClass, handleDelete, deleteAStudent, gymStudents, fetchGymClasses}){
     const [gymClasses, setGymClasses] = useState([]);
     const [classStudents, setClassStudents] = useState([])
     const [students, setStudents] =useState([])
     const [selectedStudent, setSelectedStudent] = useState([])
-    const [description, setDescription] = useState("")
+    // const [description, setDescription] = useState("")
     const [workoutLibrary, setWorkoutLibrary]=useState([])
     const [selectedWorkout, setSelectedWorkout]=useState([])
-    const [classWorkouts, setClassWorkouts]=useState([])
+    // const [classWorkouts, setClassWorkouts]=useState([])
     // const [isTrue, setIsTrue]=useState(true)
 
 
     useEffect(() => {
         fetch("http://localhost:3000/gym_classes")
         .then(resp=> resp.json())
-        .then(gymclass => setGymClasses(gymclass))
-    }, [])
+        .then(gymclass => setGymClasses(gymclass));
+        //fetch data for the students added to this class
+        fetch("http://localhost:3000/class_students")
+        .then(resp=> resp.json())
+        .then(classStudent => setClassStudents(classStudent));
+        //fetch the students to use in the addStudent function
+        fetch("http://localhost:3000/students")
+        .then(resp=> resp.json())
+        .then(student => setStudents(student));
+        //fetch all of the existing workout templates
+        fetch("http://localhost:3000/workout_plans")
+        .then(resp=> resp.json())
+        .then(workout=> setWorkoutLibrary(workout))
+        }, [])
 
-    console.log("class_students in gymclasscard", classStudents)
 
     // console.log(gymClass)
     // console.log(gymClass.students)
 
-    function deleteThisStudent(){
-        deleteAStudent(selectedStudent)
-    }
+    // function deleteThisStudent(){
+    //     deleteAStudent(selectedStudent)
+    // }
+    
 
-    //fetch data for the students added to this class
-    useEffect(()=>{
-    fetch("http://localhost:3000/class_students")
-    .then(resp=> resp.json())
-    .then(classStudent => setClassStudents(classStudent))
-    }, [])
-
-    //fetch all of the existing workout templates
-    useEffect(()=>{
-        fetch("http://localhost:3000/workout_plans")
-        .then(resp=> resp.json())
-        .then(workout=> setWorkoutLibrary(workout))
-    }, [])
 
     //delete an existing class
     function deleteThisClass(){
@@ -50,50 +49,46 @@ function GymClassCard({gymClass, handleDelete, deleteAStudent}){
 
     //delete a student from a class....NEED HELP!!!!!
     
-    //mapping over class_student
-    function mapStudents(){
-        return(
-            classStudents.map(eachClassStudent=>{
-                return(
-                    <>
-                    <li>{eachClassStudent.student.name}</li>
-                    <button onClick={deleteThisStudent}>delete this student</button>
-                    </>
-                )
-            })
-        )
-    }
-
+    // mapping over class_student
     // function mapStudents(){
     //     return(
-    //         gymClasses.map(eachGymClass=>{
+    //         classStudents.map(eachClassStudent=>{
     //             return(
     //                 <>
-    //                 <li>{eachGymClass.student.name}</li>
-    //                 <button onClick={deleteThisStudent}>delete this student</button>
+    //                 <li>{eachClassStudent.student.name}</li>
+    //                 {/* <button onClick={deleteThisStudent}>delete this student</button> */}
     //                 </>
     //             )
     //         })
     //     )
     // }
+
+    function mapStudents(){
+        return(
+            gymStudents.map(eachGymStudent=> {
+                return(
+                    <li>{eachGymStudent.name}</li>
+                )}
+            )
+        ) 
+    }
+
+
+
+
+
     function mapWorkouts(gymClass){
         // console.log( "instance of gymclass", gymClass)
         return(
             gymClass.workout_plans.map(workout=>{
-                // console.log("this log comes from gymclasscard", gymClass.class_workouts)
                 return(
+                    <>
                     <h5>{workout.title}</h5>
+                    </>
                 )
             })
         )
     }
-
-      //fetch the students to use in the addStudent function
-      useEffect(()=>{
-        fetch("http://localhost:3000/students")
-        .then(resp=> resp.json())
-        .then(student => setStudents(student))
-    }, [])
 
     //add a student to the specific class
     function addStudentToClass(synthEvent){
@@ -111,10 +106,31 @@ function GymClassCard({gymClass, handleDelete, deleteAStudent}){
                 },
                 body: JSON.stringify(addedStudent)})
                 .then(resp=> resp.json())
-                .then(newStudent=> setClassStudents([...classStudents, newStudent]))
+                .then(newStudent=> {
+                    fetchGymClasses()
+                })
         }
 
   
+        function addWorkoutToClass(synthEvent){
+            synthEvent.preventDefault()
+            console.log(selectedWorkout, gymClass)
+            const addedWorkout ={
+                workout_plan_id: selectedWorkout,
+                gym_class_id: gymClass.id
+            }
+            // POST fetch to class_students, hit a create route.
+            fetch("http://localhost:3000/class_workouts", {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                    body: JSON.stringify(addedWorkout)})
+                    .then(resp=> resp.json())
+                    //set this to a 
+                    .then(newWorkout=> fetchGymClasses() )
+        }
+        // setClassWorkouts([...classWorkouts, newWorkout])
 
     //EDIT class description...NEED TO FIX
     // function editClassDescription(synthEvent){
@@ -130,33 +146,6 @@ function GymClassCard({gymClass, handleDelete, deleteAStudent}){
     //     .then(resp => resp.json())
     //     .then(updatedDescription => setDescription(updatedDescription))
     // }
-
-    function addWorkoutToClass(synthEvent){
-        synthEvent.preventDefault()
-        console.log(selectedWorkout, gymClass)
-        const addedWorkout ={
-            workout_plan_id: selectedWorkout,
-            gym_class_id: gymClass.id
-        }
-        // POST fetch to class_students, hit a create route.
-        fetch("http://localhost:3000/class_workouts", {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify(addedWorkout)})
-                .then(resp=> resp.json())
-                .then(newWorkout=> setClassWorkouts([...classWorkouts, newWorkout]))
-    }
-
-
-    // function changeClassContainer(){
-        
-    // }
-
-
-
-
 
     return(
         <UnclickedGymCardStyler>
@@ -177,7 +166,7 @@ function GymClassCard({gymClass, handleDelete, deleteAStudent}){
             </select>
             {mapWorkouts(gymClass)}
             <h5>Students:</h5>
-            {mapStudents(gymClass)}
+            {mapStudents()}
             <ButtonStyler onClick={addStudentToClass}>Add a student</ButtonStyler>
             <select type="text" value={selectedStudent} onChange={(e) => setSelectedStudent(e.target.value)}>
                 <option >Please select a student</option>
@@ -208,8 +197,14 @@ const UnclickedGymCardStyler = styled.div`
     flex-direction: column;
     position: flex;
     overflow: scroll;
-    
-    
+    &::-webkit-scrollbar {
+        width: 10px;
+        border: 1px solid black;
+    }
+    &::-webkit-slider-thumb {
+        width: 10px;
+        background-color: red
+    }
     
     //modal?
 `

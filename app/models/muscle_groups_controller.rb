@@ -1,2 +1,0 @@
-class MuscleGroupsController < ApplicationController
-end

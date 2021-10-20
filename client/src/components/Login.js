@@ -4,10 +4,6 @@ import CoachableLogo from "../CoachableLogo1.PNG"
  
 function Login(){
  
-    // function handleSubmit(event){
-    //     event.preventDefault()
-        
-    // }
     return(
         <>
         <ImgWrapper>

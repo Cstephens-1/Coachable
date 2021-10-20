@@ -87,7 +87,7 @@ squats = Exercise.create(
 )
 
 plan1= WorkoutPlan.create(
-    title: "Arm day",
+    title: "Arms",
     user_id: cory.id
 )
 
@@ -96,6 +96,20 @@ plan2 = WorkoutPlan.create(
     user_id: trent.id
 )
 
+plan3 = WorkoutPlan.create(
+    title: "chest",
+    user_id: cory.id
+)
+
+plan4 = WorkoutPlan.create(
+    title: "back",
+    user_id: trent.id
+)
+
+plan5 = WorkoutPlan.create(
+    title: "abs",
+    user_id: cory.id
+)
 ExList1 = ExerciseList.create(
     reps: "12/10/8",
     exercise_id: curls.id,
@@ -104,17 +118,20 @@ ExList1 = ExerciseList.create(
 
 ExList2 = ExerciseList.create(
     reps: "3 X 10",
-    exercise_id: chinups.id
+    exercise_id: chinups.id,
+    workout_plan_id: plan1.id
 )
 
 ExList3 = ExerciseList.create(
     reps: "3 X 20",
-    exercise_id: pushups.id
+    exercise_id: pushups.id,
+    workout_plan_id: plan1.id
 )
 
 ExList4 = ExerciseList.create(
-    reps:"12/10/8",
-    exercise_id: squats.id
+    reps:"3x20",
+    exercise_id: squats.id,
+    workout_plan_id: plan2.id
 )
 
 UserWorkout1= UserWorkout.create(

@@ -4,7 +4,7 @@ import WorkoutCard from "./WorkoutCard"
 
 function WorkoutLibrary(){
     const [workoutLibrary, setWorkoutLibrary]=useState([])
-    const [newWorkoutTitle, setTitle] = useState("")
+    // const [newWorkoutTitle, setTitle] = useState("")
 
     //fetch existing workout plans
     useEffect(()=>{
@@ -13,19 +13,15 @@ function WorkoutLibrary(){
         .then(exercise=> setWorkoutLibrary(exercise))
     }, [])
 
-    // console.log("state of workoutLibrary", workoutLibrary)
 
     //format the workout plans
     function mapWorkouts(){
         return(
             workoutLibrary.map(workout =>{
                 return(
-                    
                     <WorkoutCard workout={workout} key={workout.id} handleDelete={handleDelete}/>
-                    
                 )
             })
-           
         )
     }
 

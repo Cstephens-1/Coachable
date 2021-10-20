@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import GymClassCard from "./GymClassCard"
-import Login from "./Login";
+// import Login from "./Login";
 
 function MyClasses(){
     const [gymClasses, setGymClasses] = useState([]);
@@ -9,13 +9,16 @@ function MyClasses(){
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [description, setDescription] = useState("");
-    const [classStudents, setClassStudents] = useState("")
+    // const [classStudents, setClassStudents] = useState("")
  
-    useEffect(() => {
+
+    function fetchGymClasses(){
         fetch("http://localhost:3000/gym_classes")
         .then(resp=> resp.json())
         .then(gymclass => setGymClasses(gymclass))
-    }, [])
+    }
+
+    useEffect(fetchGymClasses, [])
 
 
       //DELETE an exercise
@@ -59,13 +62,15 @@ function MyClasses(){
     //     setClassStudents([...classStudentsRemaining])
     // }
 
+    
+
 
 
     function mapClasses(){
             return(
                 gymClasses.map(gymClass =>{
                     return(
-                        <GymClassCard gymClass={gymClass} key={gymClass.id} handleDelete={handleDelete}/>
+                        <GymClassCard gymClass={gymClass} key={gymClass.id} handleDelete={handleDelete} gymStudents={gymClass.students} fetchGymClasses={fetchGymClasses}/>
                     )
                 })
                

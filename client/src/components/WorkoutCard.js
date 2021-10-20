@@ -3,8 +3,8 @@ import styled from "styled-components"
 
 function WorkoutCard({workout, handleDelete}){
     const [exercises, setExercises] = useState([])
-    const [selectedExercise, setSelectedExercise] = useState([])
-    const [reps, setReps]=useState("")
+    // const [selectedExercise, setSelectedExercise] = useState([])
+    // const [reps, setReps]=useState("")
 
     function mapExerciseLists(workout){
             return(
@@ -30,9 +30,9 @@ function WorkoutCard({workout, handleDelete}){
     }
 
      //add a student to the specific class..requires a refresh
-     function addExerciseToWorkout(synthEvent){
-        synthEvent.preventDefault()
-        console.log(selectedExercise, workout)
+    //  function addExerciseToWorkout(synthEvent){
+    //     synthEvent.preventDefault()
+    //     console.log(selectedExercise, workout)
         // const newExerciseList ={
         //     reps: reps,
         //     exercise_id: selectedExercise.id,
@@ -50,7 +50,7 @@ function WorkoutCard({workout, handleDelete}){
         //             setSelectedExerciseList([...exercises, newExerciseListFromDB])
         //             console.log(selectedExerciseList)
         //         })
-        }
+        // }
             
         
         //not sure what this is below here
