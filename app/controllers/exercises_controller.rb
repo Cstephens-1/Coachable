@@ -15,15 +15,15 @@ class ExercisesController < ApplicationController
         if exercise.save
             render json: exercise, status: :created
         else
-            render json: {error: "did not create"}
+            render json: exercise.errors
         end
     end
 
     def update
         exercise = Exercise.find_by(id: params[:id])
         if exercise 
-            exercise.update(exercise_params)
-            render json: exercise
+            exercise.update(description: params[:description])
+            render json: exercise, status: :ok
         else
             render json: {error: "exercise doesn't exist"}, status: :not_found
         end

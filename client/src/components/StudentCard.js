@@ -2,7 +2,7 @@ import { useState } from "react"
 import styled from "styled-components"
 
 function StudentCard({student, handleDelete}){
-    const [notes, setNotes] = useState("")
+    // const [notes, setNotes] = useState("")
 
     console.log(student)
 
@@ -10,21 +10,21 @@ function StudentCard({student, handleDelete}){
         handleDelete(student)
     }
 
-    function editStudentDetails(synthEvent){
-        synthEvent.preventDefault()
-        console.log(notes)
-         fetch(`http://localhost:3000/students/${student.id}`, {
-            method: "PATCH",
-            headers: {
-                "content-type":"application/json"
-            },
-            body: JSON.stringify({notes: notes})
-        })
-        .then(resp => resp.json())
-        .then(updatedNotes => setNotes(updatedNotes))
+    // function editStudentDetails(synthEvent){
+    //     synthEvent.preventDefault()
+    //     console.log(notes)
+    //      fetch(`http://localhost:3000/students/${student.id}`, {
+    //         method: "PATCH",
+    //         headers: {
+    //             "content-type":"application/json"
+    //         },
+    //         body: JSON.stringify({notes: notes})
+    //     })
+    //     .then(resp => resp.json())
+    //     .then(updatedNotes => setNotes(updatedNotes))
         
 
-    }
+    // }
 
     
     return(
@@ -32,8 +32,8 @@ function StudentCard({student, handleDelete}){
         <StudentCardStyler>
         <h3>{student.name}</h3>
         <p>Notes: {student.notes}</p>
-        <input type="text" value={notes} onChange={(e) => setNotes(e.target.value)}/>
-        <ButtonStyler onClick={editStudentDetails}>Edit student details</ButtonStyler>
+        {/* <input type="text" value={notes} onChange={(e) => setNotes(e.target.value)}/>
+        <ButtonStyler onClick={editStudentDetails}>Edit student details</ButtonStyler> */}
         <ButtonStyler onClick={deleteThisStudent}>Delete Student</ButtonStyler>
         </StudentCardStyler>
         </>

@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 
-function GymClassCard({gymClass, handleDelete}){
-
+function GymClassCard({gymClass, handleDelete, deleteAStudent}){
+    const [gymClasses, setGymClasses] = useState([]);
     const [classStudents, setClassStudents] = useState([])
     const [students, setStudents] =useState([])
     const [selectedStudent, setSelectedStudent] = useState([])
@@ -11,10 +11,23 @@ function GymClassCard({gymClass, handleDelete}){
     const [workoutLibrary, setWorkoutLibrary]=useState([])
     const [selectedWorkout, setSelectedWorkout]=useState([])
     const [classWorkouts, setClassWorkouts]=useState([])
+    // const [isTrue, setIsTrue]=useState(true)
 
+
+    useEffect(() => {
+        fetch("http://localhost:3000/gym_classes")
+        .then(resp=> resp.json())
+        .then(gymclass => setGymClasses(gymclass))
+    }, [])
+
+    console.log("class_students in gymclasscard", classStudents)
 
     // console.log(gymClass)
     // console.log(gymClass.students)
+
+    function deleteThisStudent(){
+        deleteAStudent(selectedStudent)
+    }
 
     //fetch data for the students added to this class
     useEffect(()=>{
@@ -35,16 +48,34 @@ function GymClassCard({gymClass, handleDelete}){
         handleDelete(gymClass)
     }
 
-    function mapStudents(gymClass){
+    //delete a student from a class....NEED HELP!!!!!
+    
+    //mapping over class_student
+    function mapStudents(){
         return(
-            gymClass.students.map(student=>{
+            classStudents.map(eachClassStudent=>{
                 return(
-                    <li>{student.name}</li>
+                    <>
+                    <li>{eachClassStudent.student.name}</li>
+                    <button onClick={deleteThisStudent}>delete this student</button>
+                    </>
                 )
             })
         )
     }
 
+    // function mapStudents(){
+    //     return(
+    //         gymClasses.map(eachGymClass=>{
+    //             return(
+    //                 <>
+    //                 <li>{eachGymClass.student.name}</li>
+    //                 <button onClick={deleteThisStudent}>delete this student</button>
+    //                 </>
+    //             )
+    //         })
+    //     )
+    // }
     function mapWorkouts(gymClass){
         // console.log( "instance of gymclass", gymClass)
         return(
@@ -64,7 +95,7 @@ function GymClassCard({gymClass, handleDelete}){
         .then(student => setStudents(student))
     }, [])
 
-    //add a student to the specific class..requires a refresh
+    //add a student to the specific class
     function addStudentToClass(synthEvent){
         synthEvent.preventDefault()
         console.log(selectedStudent, gymClass)
@@ -85,20 +116,20 @@ function GymClassCard({gymClass, handleDelete}){
 
   
 
-    //EDIT class description
-    function editClassDescription(synthEvent){
-        synthEvent.preventDefault()
-        console.log(description)
-         fetch(`http://localhost:3000/gym_classes/${gymClass.id}`, {
-            method: "PATCH",
-            headers: {
-                "content-type":"application/json"
-            },
-            body: JSON.stringify({description: description})
-        })
-        .then(resp => resp.json())
-        .then(updatedDescription => setDescription(updatedDescription))
-    }
+    //EDIT class description...NEED TO FIX
+    // function editClassDescription(synthEvent){
+    //     synthEvent.preventDefault()
+    //     console.log(description)
+    //      fetch(`http://localhost:3000/gym_classes/${gymClass.id}`, {
+    //         method: "PATCH",
+    //         headers: {
+    //             "content-type":"application/json"
+    //         },
+    //         body: JSON.stringify({description: description})
+    //     })
+    //     .then(resp => resp.json())
+    //     .then(updatedDescription => setDescription(updatedDescription))
+    // }
 
     function addWorkoutToClass(synthEvent){
         synthEvent.preventDefault()
@@ -119,13 +150,21 @@ function GymClassCard({gymClass, handleDelete}){
     }
 
 
+    // function changeClassContainer(){
+        
+    // }
+
+
+
+
+
     return(
-        <GymCardStyler>
+        <UnclickedGymCardStyler>
             <h1>Level: {gymClass.level}</h1>
             <h5>{gymClass.start_time} - {gymClass.end_time}</h5>
             <p>Description: {gymClass.description}</p>
-            <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
-            <ButtonStyler onClick={editClassDescription}>Edit description</ButtonStyler>
+            {/* <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/> */}
+            {/* <ButtonStyler onClick={editClassDescription}>Edit description</ButtonStyler> */}
             <h5>Today's workout</h5>
             <ButtonStyler onClick={addWorkoutToClass}>Add a workout</ButtonStyler>
             <select type="text" value={selectedWorkout} onChange={(e) => setSelectedWorkout(e.target.value)}>
@@ -140,7 +179,6 @@ function GymClassCard({gymClass, handleDelete}){
             <h5>Students:</h5>
             {mapStudents(gymClass)}
             <ButtonStyler onClick={addStudentToClass}>Add a student</ButtonStyler>
-               
             <select type="text" value={selectedStudent} onChange={(e) => setSelectedStudent(e.target.value)}>
                 <option >Please select a student</option>
                 {students.map(student =>{
@@ -150,14 +188,14 @@ function GymClassCard({gymClass, handleDelete}){
                 })}
             </select>
             <ButtonStyler onClick={deleteThisClass}>Delete this class</ButtonStyler>
-        </GymCardStyler>
+        </UnclickedGymCardStyler>
     )
 }
 
 
 export default GymClassCard
 
-const GymCardStyler = styled.div`
+const UnclickedGymCardStyler = styled.div`
     border-width: 2px;
     border-color: black;
     border-style: solid;
@@ -168,8 +206,12 @@ const GymCardStyler = styled.div`
     margin: 6px;
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: flex;
     overflow: scroll;
+    
+    
+    
+    //modal?
 `
 
 const ButtonStyler= styled.button`
@@ -179,3 +221,4 @@ const ButtonStyler= styled.button`
     background-color: skyblue;
     padding: 5px;
 `
+

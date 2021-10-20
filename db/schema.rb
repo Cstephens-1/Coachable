@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_13_182310) do
+ActiveRecord::Schema.define(version: 2021_10_19_183115) do
 
   create_table "class_students", force: :cascade do |t|
     t.integer "student_id", null: false
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(version: 2021_10_13_182310) do
   end
 
   create_table "gym_classes", force: :cascade do |t|
-    t.time "start_time"
-    t.time "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.string "level"
     t.string "description"
     t.integer "user_id", null: false

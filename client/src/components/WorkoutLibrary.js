@@ -40,32 +40,32 @@ function WorkoutLibrary(){
         setWorkoutLibrary([...workoutPlansRemaining])
     }
 
-    function handleSubmit(synthEvent){
-        synthEvent.preventDefault();
-        const newWorkoutPlan = {
-            title: newWorkoutTitle
-            // user_id: user
-        };
-        fetch("http://localhost:3000/workout_plans", {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(newWorkoutPlan)})
-            .then(resp=> resp.json())
-            .then(workoutPlanFromDataBase => setWorkoutLibrary([...workoutLibrary, workoutPlanFromDataBase]))
-    }
+    // function handleSubmit(synthEvent){
+    //     synthEvent.preventDefault();
+    //     const newWorkoutPlan = {
+    //         title: newWorkoutTitle
+    //         // user_id: user
+    //     };
+    //     fetch("http://localhost:3000/workout_plans", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-type": "application/json",
+    //         },
+    //         body: JSON.stringify(newWorkoutPlan)})
+    //         .then(resp=> resp.json())
+    //         .then(workoutPlanFromDataBase => setWorkoutLibrary([...workoutLibrary, workoutPlanFromDataBase]))
+    // }
 
 
     return(
         <>
         <h1>Workout Templates</h1>
-        <h4>Plan your next workout</h4>
+        {/* <h4>Plan your next workout</h4>
         <form onSubmit={handleSubmit}>
             <label>Name of workout: </label>
             <input type="text" value={newWorkoutTitle} onChange={(e) => setTitle(e.target.value)}/>
             <button type="submit">Create a new workout</button>
-        </form>
+        </form> */}
         <LibaryStyler>
             {mapWorkouts()}
         </LibaryStyler>

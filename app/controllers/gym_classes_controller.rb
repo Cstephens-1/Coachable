@@ -27,7 +27,6 @@ class GymClassesController < ApplicationController
 
     def destroy
         gym_class = GymClass.find_by(id: params[:id])
-        byebug
         if gym_class 
             gym_class.destroy
             head :no_content

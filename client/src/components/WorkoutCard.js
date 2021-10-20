@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 function WorkoutCard({workout, handleDelete}){
     const [exercises, setExercises] = useState([])
-    const [selectedExerciseList, setSelectedExerciseList] = useState([])
+    const [selectedExercise, setSelectedExercise] = useState([])
     const [reps, setReps]=useState("")
 
     function mapExerciseLists(workout){
@@ -32,10 +32,10 @@ function WorkoutCard({workout, handleDelete}){
      //add a student to the specific class..requires a refresh
      function addExerciseToWorkout(synthEvent){
         synthEvent.preventDefault()
-        console.log(selectedExerciseList, workout)
+        console.log(selectedExercise, workout)
         // const newExerciseList ={
         //     reps: reps,
-        //     exercise_id: selectedExerciseList.id,
+        //     exercise_id: selectedExercise.id,
         //     workout_plan_id: workout.id
         // }
         // POST fetch to class_students, hit a create route.
@@ -74,19 +74,19 @@ function WorkoutCard({workout, handleDelete}){
         <h1>{workout.title}</h1>
         <p>{mapExerciseLists(workout)}</p>
         <ButtonStyler onClick={deleteThisWorkout}>Delete this workout</ButtonStyler>
-        <ButtonStyler onClick={addExerciseToWorkout}>Add a new exercise to this workout</ButtonStyler>
-        <input value = {reps} placeholder="reps" onChange={(e) => setReps(e.target.value)}/>
-        <select type="text" value={selectedExerciseList} onChange={(e) => setSelectedExerciseList(e.target.value)}>
-                <option >Please select an exercise list</option>
+        {/* <ButtonStyler onClick={addExerciseToWorkout}>Add a new exercise to this workout</ButtonStyler>
+        <input value={reps} placeholder="reps" onChange={(e) => setReps(e.target.value)}/>
+        <select type="text" value={selectedExercise} onChange={(e) => setSelectedExercise(e.target.value)}>
+                <option >Please select an exercise</option>
                 {exercises.map(exercise =>{
                     return(
                         <option value={exercise.id} key={exercise.id}>{exercise.reps} {exercise.title}</option>
                     )
                 })}
-            </select>
+            </select> */}
         
-        <ButtonStyler>Edit this workout</ButtonStyler>
-        <input placeholder="edit this workout"></input>
+        {/* <ButtonStyler>Edit this workout</ButtonStyler>
+        <input placeholder="edit this workout"></input> */}
         </WorkoutCardStyler>
 
     )

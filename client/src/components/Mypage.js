@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import styled from "styled-components"
 import GymClassCard from "./GymClassCard"
 import MyClasses from "./MyClasses"
+import NavBar from "./NavBar"
 import WorkoutLibrary from "./WorkoutLibrary"
  
  
@@ -29,15 +30,16 @@ function Mypage(){
  
     return(
         <div>
-        <MuscleManWrapper>
+             {/* <NavBar /> */}
+        {/* <MuscleManWrapper>
             <p>Muscle Man goes here (colored to see the div)</p>
             <PieChartWrapper>
             <h3>Workout pie chart to track how often muscle groups are done (colored to see the div)</h3>
             </PieChartWrapper>
-        </MuscleManWrapper>
-        <TodayStyler>
+        </MuscleManWrapper> */}
+        {/* <TodayStyler>
         <h1>Today's Plans (calendar)</h1>
-        </TodayStyler>
+        </TodayStyler> */}
         <ClassWrapper>
         <MyClasses/>
         <WorkoutLibrary />
@@ -53,9 +55,9 @@ export default Mypage
 // `
 
 const ClassWrapper = styled.div`
-    width: 50vw;
+    width: 100vw;
     background-color: skyblue;
-    margin-left: 50%;
+    /* margin-left: 50%; */
     text-align: center;
 `
 

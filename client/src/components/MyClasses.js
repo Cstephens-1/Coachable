@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import GymClassCard from "./GymClassCard"
+import Login from "./Login";
 
 function MyClasses(){
     const [gymClasses, setGymClasses] = useState([]);
@@ -8,7 +9,7 @@ function MyClasses(){
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [description, setDescription] = useState("");
-    // const [newGymClass, setNewGymClass]=useState({})
+    const [classStudents, setClassStudents] = useState("")
  
     useEffect(() => {
         fetch("http://localhost:3000/gym_classes")
@@ -49,11 +50,14 @@ function MyClasses(){
         })
     }
 
-    // t.time :start_time
-    //   t.time :end_time
-    //   t.string :level
-    //   t.string :description
-    //   t.belongs_to :user
+    // function deleteAStudent(student){
+    //     fetch(`http://localhost:3000/class_students/${student.id}`,{ 
+    //         method: "DELETE"
+    //     })
+    //     let classStudentsRemaining = classStudent.filter(eachStudent => eachStudent.id !== classStudent.id);
+    //     console.log(classStudentsRemaining)
+    //     setClassStudents([...classStudentsRemaining])
+    // }
 
 
 

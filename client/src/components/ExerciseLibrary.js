@@ -59,17 +59,17 @@ function ExerciseLibrary(){
 
 
     //UPDATE an exercises' description or title
-    function editExerciseDescription(exercise){
-        console.log(exercise)
+    function editExerciseDescription(synthEvent){
+        // console.log(synthEvent)
         // fetch(`http://localhost:3000/exercises/${exercise.id}`, {
         //     method: "PATCH",
         //     headers: {
         //         "content-type":"application/json"
         //     },
-        //     body: JSON.stringify(description)
+        //     body: JSON.stringify({description: description})
         // })
         // .then(resp => resp.json())
-        // .then(setDescription(description))
+        // .then(newDescription=> setDescription(newDescription))
     }
     
 
@@ -85,8 +85,8 @@ function ExerciseLibrary(){
             <input type="text" value={muscleGroups} onChange={(e) => setMuscleGroups(e.target.value)}/>
             <label>Description: </label>
             <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
-            <label>Link to video or image: </label>
-            <input />
+            {/* <label>Link to video or image: </label>
+            <input /> */}
             <button type="submit">Submit a new exercise: </button>
         </FormStyler>
         <LibaryStyler>
